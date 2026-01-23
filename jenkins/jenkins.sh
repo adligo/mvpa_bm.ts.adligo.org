@@ -172,19 +172,21 @@ doAfterScript "./mvpa-group/buildSrc/checkVersions.sh"
 function doHttps () {
   if [[ $VERBOSE == "true" ]]; then
     echo "jenkins.sh doHttps"
-    ./buildSrc/cloneOrPull.sh --verbose
-    doAfterScript "./buildSrc/cloneOrPull.sh --verbose"
-    ./buildSrc/cloneOrPull.sh --verbose
-    doAfterScript "./buildSrc/cloneOrPull.sh --verbose"
+    ./buildSrc/cloneOrPull.sh --verbose --project $GIT_DEP_PROJECT --npm-install
+    doAfterScript "./buildSrc/cloneOrPull.sh --verbose --project $GIT_DEP_PROJECT --npm-install"
+    ./buildSrc/cloneOrPull.sh --verbose --project $GIT_GROUP_PROJECT
+    doAfterScript "./buildSrc/cloneOrPull.sh --verbose --project $GIT_GROUP_PROJECT"
     doCd mvpa_group.ts.adligo.org
-    ../buildSrc/setupBuildTest.sh --verbose
+    node --disable-warning=DEP0190 buildSrc/git-clone-or-pull.cjs --pull --verbose
+    ../buildSrc/setupBuildTest.sh
     doAfterScript "../buildSrc/setupBuildTest.sh --verbose"
   else
-    ./buildSrc/cloneOrPull.sh
-    doAfterScript "./buildSrc/cloneOrPull.sh"
-    ./buildSrc/cloneOrPull.sh
-    doAfterScript "./buildSrc/cloneOrPull.sh"
+    ./buildSrc/cloneOrPull.sh --project $GIT_DEP_PROJECT --npm-install
+    doAfterScript "./buildSrc/cloneOrPull.sh --project $GIT_DEP_PROJECT --npm-install"
+    ./buildSrc/cloneOrPull.sh --project $GIT_GROUP_PROJECT
+    doAfterScript "./buildSrc/cloneOrPull.sh --project $GIT_GROUP_PROJECT"
     doCd mvpa_group.ts.adligo.org
+    node --disable-warning=DEP0190 buildSrc/git-clone-or-pull.cjs --pull
     ../buildSrc/setupBuildTest.sh
     doAfterScript "../buildSrc/setupBuildTest.sh"
   fi
@@ -193,21 +195,23 @@ function doHttps () {
 function doSsl () {
   if [[ $VERBOSE == "true" ]]; then
     echo "jenkins.sh doSsl"
-    ./buildSrc/cloneOrPull.sh --ssl --verbose
-    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --verbose"
-    ./buildSrc/cloneOrPull.sh --ssl --verbose
-    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --verbose"
+    ./buildSrc/cloneOrPull.sh --ssl --verbose --project $GIT_DEP_PROJECT --npm-install
+    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --verbose --project $GIT_DEP_PROJECT --npm-install"
+    ./buildSrc/cloneOrPull.sh --ssl --verbose --project $GIT_GROUP_PROJECT
+    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --verbose --project $GIT_GROUP_PROJECT"
     doCd mvpa_group.ts.adligo.org
-    ../buildSrc/setupBuildTest.sh --ssl --verbose
-    doAfterScript "../buildSrc/setupBuildTest.sh --ssl --verbose"
+    node --disable-warning=DEP0190 buildSrc/git-clone-or-pull.cjs --ssl --pull --verbose
+    ../buildSrc/setupBuildTest.sh
+    doAfterScript "../buildSrc/setupBuildTest.sh"
   else
-    ./buildSrc/cloneOrPull.sh --ssl
-    doAfterScript "./buildSrc/cloneOrPull.sh --ssl"
-    ./buildSrc/cloneOrPull.sh --ssl
-    doAfterScript "./buildSrc/cloneOrPull.sh --ssl"
+    ./buildSrc/cloneOrPull.sh --ssl --project $GIT_DEP_PROJECT --npm-install
+    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --project $GIT_DEP_PROJECT --npm-install"
+    ./buildSrc/cloneOrPull.sh --ssl --project $GIT_GROUP_PROJECT
+    doAfterScript "./buildSrc/cloneOrPull.sh --ssl --project $GIT_GROUP_PROJECT"
     doCd mvpa_group.ts.adligo.org
-    ../buildSrc/setupBuildTest.sh --ssl
-    doAfterScript "../buildSrc/setupBuildTest.sh --ssl"
+    node --disable-warning=DEP0190 buildSrc/git-clone-or-pull.cjs --ssl --pull
+    ../buildSrc/setupBuildTest.sh
+    doAfterScript "../buildSrc/setupBuildTest.sh"
   fi
 }
 
